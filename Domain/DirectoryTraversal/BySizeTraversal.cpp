@@ -8,7 +8,7 @@ void BySizeTraversal::directoryTraversal(QDir &directory, QMap<QString, double> 
     std::vector<QDir> inDirectories;
     for(QFileInfo& inf : directory.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot))
         if(!inf.isDir())
-            stat[path] += (static_cast<long long>(inf.size()));
+            stat[path] += (static_cast<double>(inf.size()));
         else
             inDirectories.push_back(QDir(inf.filePath()));
 

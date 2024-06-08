@@ -3,7 +3,6 @@
 
 #include "TraversalStrategy.h"
 #include <QDir>
-#include <numeric>
 
 class BySizeTraversal : public TraversalStrategy
 {
