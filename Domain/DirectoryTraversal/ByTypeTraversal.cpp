@@ -29,13 +29,5 @@ QMap<QString, double> ByTypeTraversal::execute(const QString &path)
 
     directoryTraversal(directory, stat);
 
-    double sum = 0.0;
-    for(auto& x: stat)
-        sum += x;
-
-
-    for(auto& x : stat)
-        x /= sum;
-
     return stat;
 }

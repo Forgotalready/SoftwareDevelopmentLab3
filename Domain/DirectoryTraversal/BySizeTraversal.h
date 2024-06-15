@@ -8,7 +8,6 @@ class BySizeTraversal : public TraversalStrategy
 {
 private:
     void directoryTraversal(QDir&, QMap<QString, double>& stat);
-    void formOtherGroup(QMap<QString, double>& stat, float pr);
 public:
     QMap<QString, double> execute(const QString& path) override;
 };
