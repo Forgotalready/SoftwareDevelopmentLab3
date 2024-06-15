@@ -2,7 +2,8 @@
 #define TRAVERSALSTRATEGY_H
 
 #include <QMap>
-#include <string>
+
+QMap<QString, double> formOtherGroup(QMap<QString, double>& stat, double border = 1.0);
 
 class TraversalStrategy
 {

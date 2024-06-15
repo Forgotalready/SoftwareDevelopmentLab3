@@ -16,12 +16,6 @@ void BySizeTraversal::directoryTraversal(QDir &directory, QMap<QString, double> 
         directoryTraversal(dir, stat);
 }
 
-void BySizeTraversal::formOtherGroup(QMap<QString, double> &stat, float pr)
-{
-
-}
-
-
 QMap<QString, double> BySizeTraversal::execute(const QString &path)
 {
     QDir directory;
@@ -29,15 +23,6 @@ QMap<QString, double> BySizeTraversal::execute(const QString &path)
     QMap<QString, double> stat;
 
     directoryTraversal(directory, stat);
-
-    double sum = 0.0;
-    for(auto& x: stat)
-        sum += x;
-
-
-    for(auto& x : stat)
-        x /= sum;
-
 
     return stat;
 }

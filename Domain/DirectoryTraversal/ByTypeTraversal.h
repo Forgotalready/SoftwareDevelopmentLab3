@@ -8,7 +8,6 @@ class ByTypeTraversal : public TraversalStrategy
 {
 private:
     void directoryTraversal(QDir&, QMap<QString, double>&);
-    void formOtherGroup(QMap<QString, double>& stat, float pr);
 public:
     QMap<QString, double> execute(const QString &path);
 };
