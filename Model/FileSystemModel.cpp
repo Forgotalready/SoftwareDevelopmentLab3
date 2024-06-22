@@ -28,7 +28,12 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const
 
 bool FileSystemModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    return 0;
+    if(role != Qt::EditRole)
+        return false;
+
+    m_data[index.row()][index.column()] = value.String;
+    emit dataChanged(index, index, {role});
+    return true;
 }
 
 QVariant FileSystemModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -37,7 +42,12 @@ QVariant FileSystemModel::headerData(int section, Qt::Orientation orientation, i
         return QVariant();
 
     if(orientation == Qt::Horizontal){
-        return QString("Path" + QString::number(section));
+        if(section == 0)
+            return QString("Path");
+        else if(section == 1)
+            return QString("%");
+        else
+            return QVariant();
     }else if(orientation == Qt::Vertical){
         return QString::number(section);
     }else{
@@ -53,4 +63,11 @@ QModelIndex FileSystemModel::index(int row, int column, [[maybe_unused]] const Q
 QModelIndex FileSystemModel::parent([[maybe_unused]] const QModelIndex &child) const
 {
     return QModelIndex();
+}
+
+void FileSystemModel::setNewMap(QMap<QString, double>& data)
+{
+    m_data = transformer->transofrm(data);
+    emit dataChanged(QModelIndex(), QModelIndex());
+    emit headerDataChanged(Qt::Vertical, 0, m_data.size());
 }

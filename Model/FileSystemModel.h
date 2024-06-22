@@ -27,5 +27,7 @@ private:
     std::shared_ptr<IDataTransformer> transformer;
     QVector<QVector<QString>> m_data;
     int m_columns = 2;
+public slots:
+    void setNewMap(QMap<QString, double>&);
 };
 #endif // FILESYSTEMMODEL_H

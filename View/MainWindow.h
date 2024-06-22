@@ -6,6 +6,9 @@
 #include <QTableView>
 #include <QSplitter>
 #include <QFileSystemModel>
+#include <QStatusBar>
+#include <QDebug>
+#include <QHeaderView>
 
 #include "Model/FileSystemModel.h"
 #include "Domain/Context.h"
@@ -28,5 +31,10 @@ private:
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow() = default;
+
+private slots:
+    void onSelectionChange(const QItemSelection &selected, const QItemSelection &deselected);
+signals:
+    void pathChange(QMap<QString, double>&);
 };
 #endif // MAINWINDOW_H
