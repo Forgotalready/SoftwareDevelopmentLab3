@@ -13,7 +13,7 @@ public:
     Context(std::shared_ptr<TraversalStrategy>&);
 
     void setStrategy(std::shared_ptr<TraversalStrategy>&);
-    QMap<QString, double> executeStrategy(const QString&);
+    std::shared_ptr<QMap<QString, double>> executeStrategy(const QString&);
 };
 
 #endif // CONTEXT_H

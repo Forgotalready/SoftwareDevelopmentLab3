@@ -9,7 +9,7 @@ class ByTypeTraversal : public TraversalStrategy
 private:
     void directoryTraversal(QDir&, QMap<QString, double>&);
 public:
-    QMap<QString, double> execute(const QString &path);
+    std::shared_ptr<QMap<QString, double>> execute(const QString &path);
 };
 
 #endif // BYTYPETRAVERSAL_H

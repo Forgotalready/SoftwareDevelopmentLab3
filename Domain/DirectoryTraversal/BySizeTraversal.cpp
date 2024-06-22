@@ -16,13 +16,13 @@ void BySizeTraversal::directoryTraversal(QDir &directory, QMap<QString, double> 
         directoryTraversal(dir, stat);
 }
 
-QMap<QString, double> BySizeTraversal::execute(const QString &path)
+std::shared_ptr<QMap<QString, double>> BySizeTraversal::execute(const QString &path)
 {
     QDir directory;
     directory.setPath(path);
     QMap<QString, double> stat;
 
     directoryTraversal(directory, stat);
-
-    return stat;
+    auto finalMap = std::make_shared<QMap<QString, double>>(std::move(stat));
+    return finalMap;
 }
