@@ -10,11 +10,17 @@
 #include <QDebug>
 #include <QHeaderView>
 
+#include <QChartView>
+#include <QChart>
+#include <QPieSeries>
+
 #include "Model/FileSystemModel.h"
 #include "Domain/Context.h"
 #include "Domain/DirectoryTraversal/BySizeTraversal.h"
 #include "Domain/DirectoryTraversal/ByTypeTraversal.h"
 #include "Domain/DirectoryTraversal/TraversalStrategy.h"
+
+QT_CHARTS_USE_NAMESPACE
 
 class MainWindow final : public QMainWindow
 {
@@ -23,8 +29,13 @@ private:
     QTreeView *treeView;
     QTableView *tableView;
     void setupGUI();
+
+    void setupChart();
+
     QFileSystemModel *directoryModel;
     FileSystemModel *fileModel;
+
+    QChartView *chartView;
 
     Context context;
     std::shared_ptr<TraversalStrategy> strat;
