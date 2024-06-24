@@ -2,14 +2,16 @@
 
 void MainWindow::setupGUI()
 {
-    QSplitter* splitter= new QSplitter(this);
+    splitter= new QSplitter(this);
 
     treeView = new QTreeView(splitter);
 
-    tableView = new QTableView(splitter);
+    statisticViewAdapter = new TableViewAdapter();
 
     splitter->addWidget(treeView);
-    splitter->addWidget(chartView);
+
+    statisticViewAdapter->updateView(splitter, fileModel);
+
     setCentralWidget(splitter);
 
     setGeometry(100, 100, 1500, 500);
@@ -17,36 +19,20 @@ void MainWindow::setupGUI()
     statusBar()->showMessage("Choosen Path: ");
 }
 
-void MainWindow::setupChart()
-{
-    QChart *chart = new QChart();
-    QPieSeries *series = new QPieSeries();
-
-    for (int row = 0; row < fileModel->rowCount(QModelIndex()); ++row) {
-        QString label = fileModel->data(fileModel->index(row, 0)).toString();
-        double value = fileModel->data(fileModel->index(row, 1)).toDouble();
-        series->append(label, value);
-    }
-
-    chart->addSeries(series);
-    chart->setTitle("Pie Chart Example");
-    chart->legend()->show();
-
-    for (QPieSlice *slice : series->slices()) {
-        slice->setLabel(QString("%1: %2%").arg(slice->label()).arg(100 * slice->percentage(), 0, 'f', 1));
-    }
-
-    chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-
-}
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+
+    strat = std::make_shared<BySizeTraversal>();
+    context.setStrategy(strat);
+    QMap<QString, double> data = formOtherGroup(*(context.executeStrategy(QDir::currentPath())));
+    fileModel = new FileSystemModel(data, this);
+
     setupGUI();
 
     QString homePath = QDir::currentPath();
+
+
 
     directoryModel = new QFileSystemModel(this);
     directoryModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
@@ -64,17 +50,14 @@ MainWindow::MainWindow(QWidget *parent)
     toggleSelection.select(topLeft, topLeft);
     selectionModel->select(toggleSelection, QItemSelectionModel::Toggle);
 
-    strat = std::make_shared<BySizeTraversal>();
-    context.setStrategy(strat);
-    QMap<QString, double> data = formOtherGroup(*(context.executeStrategy(QDir::currentPath())));
-    fileModel = new FileSystemModel(data, this);
-    tableView->setModel(fileModel);
+
+    //tableView->setModel(fileModel);
 
     connect(
        selectionModel,
        &QItemSelectionModel::selectionChanged,
        this,
-        &MainWindow::onSelectionChange
+       &MainWindow::onSelectionChange
     );
     connect(
         this,
@@ -117,6 +100,7 @@ void MainWindow::onSelectionChange(const QItemSelection &selected, [[maybe_unuse
     treeView->header()->resizeSection(index.column(), length + directoryModel->fileName(index).length());
     QMap<QString, double> newStat = formOtherGroup(*(context.executeStrategy(directoryModel->filePath(indexs.constFirst()))));
     emit pathChange(newStat);
+    statisticViewAdapter->updateView(splitter, fileModel);
     //tableView->setRootIndex(fileModel->setRootPath(filePath));
 }
 

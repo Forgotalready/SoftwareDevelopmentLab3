@@ -19,6 +19,7 @@
 #include "Domain/DirectoryTraversal/BySizeTraversal.h"
 #include "Domain/DirectoryTraversal/ByTypeTraversal.h"
 #include "Domain/DirectoryTraversal/TraversalStrategy.h"
+#include "ViewAdapter.h"
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -30,12 +31,10 @@ private:
     QTableView *tableView;
     void setupGUI();
 
-    void setupChart();
-
     QFileSystemModel *directoryModel;
     FileSystemModel *fileModel;
-
-    QChartView *chartView;
+    QSplitter* splitter;
+    ViewAdapter *statisticViewAdapter;
 
     Context context;
     std::shared_ptr<TraversalStrategy> strat;

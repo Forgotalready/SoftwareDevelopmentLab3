@@ -15,6 +15,8 @@ SOURCES += \
     Domain/DirectoryTraversal/TraversalStrategy.cpp \
     Model/FileSystemModel.cpp \
     Model/IDataTransformer.cpp \
+    View/Chart.cpp \
+    View/ViewAdapter.cpp \
     main.cpp \
     View/MainWindow.cpp
 
@@ -25,7 +27,9 @@ HEADERS += \
     Domain/DirectoryTraversal/TraversalStrategy.h \
     Model/FileSystemModel.h \
     Model/IDataTransformer.h \
-    View/MainWindow.h
+    View/Chart.h \
+    View/MainWindow.h \
+    View/ViewAdapter.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
